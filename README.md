@@ -354,3 +354,72 @@ Se verificó la conectividad mediante pings exitosos entre los PCs de las difere
 **Archivo Packet Tracer:**
 
 El archivo de Packet Tracer con la topología configurada se entrega como `Mision6_RedTroncal.pkt`.
+## Misión 7: La Baliza Secreta de Coruscant – Comunicaciones Seguras y Servicios en la Red Rebelde
+
+**Topología de la Red:**
+
+La siguiente imagen representa la topología de red implementada en Cisco Packet Tracer para la baliza secreta de Coruscant:
+
+![Topología de la Baliza Secreta de Coruscant](imagen_2025-05-13_195005230.png)
+
+**Esquema de Direccionamiento IP:**
+
+* **LAN Coruscant:** `192.168.50.0/24`
+    * Router Coruscant (Interfaz LAN): `192.168.50.1/24`
+    * Servidor Coruscant: `192.168.50.100/24` (Gateway: `192.168.50.1`, DNS: `192.168.50.100`)
+    * Terminal Bothan: `192.168.50.50/24` (Gateway: `192.168.50.1`, DNS: `192.168.50.100`)
+* **LAN Flota:** `192.168.60.0/24`
+    * Router Flota (Interfaz LAN): `192.168.60.1/24`
+    * PC de Control: `192.168.60.50/24` (Gateway: `192.168.60.1`, DNS: `192.168.50.100`)
+* **Enlace Router-Router:** `10.0.0.8/30`
+    * Router Coruscant (Interfaz WAN): `10.0.0.9/30` (DCE)
+    * Router Flota (Interfaz WAN): `10.0.0.10/30` (DTE)
+
+**Comandos Clave de Rutas Estáticas:**
+
+* **Router Coruscant:**
+    ```
+    ip route 192.168.60.0 255.255.255.0 10.0.0.10
+    ip route 0.0.0.0 0.0.0.0 10.0.0.10
+    ```
+    * La primera ruta estática envía el tráfico destinado a la LAN de la Flota al Router Flota.
+    * La segunda ruta es una ruta por defecto, enviando cualquier otro tráfico desconocido al Router Flota.
+* **Router Flota:**
+    ```
+    ip route 192.168.50.0 255.255.255.0 10.0.0.9
+    ```
+    * Esta ruta estática envía el tráfico destinado a la LAN de Coruscant al Router Coruscant.
+
+**Configuración SSH en Router Coruscant:**
+ip domain-name rebelion.org
+crypto key generate rsa modulus 1024
+username admin secret S3cur3P@ss
+line vty 0 4
+transport input ssh
+login local
+exit
+service password-encryption
+* `ip domain-name rebelion.org`: Configura el nombre de dominio necesario para generar las claves RSA.
+* `crypto key generate rsa modulus 1024`: Genera las claves RSA de 1024 bits para el cifrado SSH.
+* `username admin secret S3cur3P@ss`: Crea un usuario local con nombre de usuario `admin` y la contraseña `S3cur3P@ss`.
+* `line vty 0 4`: Configura las líneas virtuales para acceso remoto.
+* `transport input ssh`: Restringe las conexiones entrantes a solo SSH.
+* `login local`: Autentica a los usuarios utilizando la base de datos de usuarios local.
+* `service password-encryption`: Cifra las contraseñas en la configuración.
+
+**Evidencia de Prueba:**
+
+* **Ping Exitoso:** Se realizó un ping exitoso desde el PC de Control (`192.168.60.50`) al Servidor de Coruscant (`192.168.50.100`) utilizando tanto la dirección IP como el nombre de dominio `planes.secretos`, lo que demuestra la correcta resolución DNS y la conectividad IP a través de las rutas estáticas.
+* **Conexión SSH Establecida:** Se estableció una conexión SSH exitosa desde el PC de Control a la interfaz WAN del Router Coruscant (`10.0.0.9`) utilizando el usuario `admin` y la contraseña configurada. Esto se verificó al obtener el prompt del Router Coruscant en la ventana del Terminal del PC de Control.
+
+**Resolución DNS:**
+
+El Servidor de Coruscant (`192.168.50.100`) se configuró como servidor DNS para la red local. Se creó un registro A para `planes.secretos` que apunta a la dirección IP del servidor (`192.168.50.100`). El PC de Control, configurado para usar este servidor DNS, pudo resolver correctamente el nombre `planes.secretos` a su dirección IP.
+
+**Comunicaciones Cifradas (SSH):**
+
+Al utilizar SSH para la administración remota del Router Coruscant, todas las comunicaciones entre el PC de Control y el router viajan de forma cifrada. Esto incluye las credenciales de inicio de sesión y los comandos de configuración, protegiéndolos de posibles interceptaciones, a diferencia de protocolos no seguros como Telnet.
+
+**Archivo Packet Tracer:**
+
+El archivo de Packet Tracer con la configuración realizada se entrega como `Mision7_BalizaCoruscant.pkt`.
