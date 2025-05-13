@@ -273,3 +273,4 @@ Al administrar remotamente los equipos de la red rebelde, utilizar un protocolo 
 En contraste, **Telnet** transmite todos los datos, incluyendo las contraseñas, en **texto plano**. Si un espía imperial intercepta el tráfico de Telnet, podría obtener fácilmente las credenciales de acceso a nuestros equipos de red, comprometiendo toda la infraestructura rebelde. Utilizar SSH es, por lo tanto, una medida fundamental para proteger la administración de nuestra red de las miradas indiscretas del Imperio.
 
 Con estos métodos de cifrado y protocolos seguros, Mon Mothma, podemos fortalecer nuestras comunicaciones y dificultar enormemente que el lado oscuro obtenga información sobre nuestros movimientos.
+## Parte II – Misiones Prácticas con Cisco Packet Tracer (40%)
