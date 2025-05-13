@@ -127,3 +127,58 @@ Las diferencias entre los protocolos de **vector de distancia** (como RIP - Rout
 
 En resumen, Maestro Yoda, mientras que el enrutamiento estático ofrece control en entornos pequeños, el enrutamiento dinámico, con protocolos como OSPF, proporciona la adaptabilidad y escalabilidad necesarias para mantener la HoloRed galáctica en constante movimiento y capaz de superar los obstáculos impuestos por el Imperio. La visión completa de la red que ofrecen los protocolos de estado de enlace los hace más poderosos para las vastas distancias de la galaxia.
 
+## Misión 3: Los Nombres del Holonet – DNS y Resolución de Nombres
+
+**Situación:** La flota rebelde ha interceptado transmisiones imperiales que mencionan distintos códigos de planeta y nombres en clave. Para coordinar un contraataque, la Alianza necesita entender cómo los nombres de dominio galácticos se traducen en localizaciones reales. En otras palabras, requieren restablecer un servicio DNS rebelde que asocie nombres de sistemas estelares con direcciones de la red. Sin DNS, comunicarse es tan difícil como encontrar un Ewok en la noche de Endor.
+
+**Narrativa:** A bordo de la nave de mando *Home One*, los técnicos rebelde te muestran un panel donde parpadea la petición “Unknown host”. El Almirante Ackbar frunce el ceño mientras exclama: "¡Es una trampa... de nombres! Nuestros sistemas no reconocen las direcciones de destino." Mon Mothma asiente con gravedad: "Debemos reconstruir nuestro directorio de comunicaciones. Aprendiz, ¿cómo funciona este Sistema de Nombres de Dominio nuestro? ¿Por qué es tan importante?".
+
+Tú recuerdas tus lecciones sobre cómo en la Red (o la HoloRed) se gestionan las direcciones simbólicas. Un nombre como “echo.base” debe traducirse a una dirección IP para establecer conexión. Ha llegado el momento de explicarlo claramente.
+
+**Pregunta:** Explica el funcionamiento básico del sistema DNS y su importancia en la comunicación en redes. ¿Cómo realiza la red rebelde (o cualquier red TCP/IP) la resolución de nombres de dominio a direcciones IP? Incluye en tu explicación qué es un servidor DNS y un registro (por ejemplo, un registro A), ilustrando con un ejemplo simple (por ejemplo: traducir holonet.rebelion.org a una dirección IP). Además, menciona brevemente qué sucede si el servidor DNS no está disponible y cómo eso afectaría a las comunicaciones de la Alianza.
+
+**Respuesta:**
+
+Almirante Ackbar, Mon Mothma, la clave para traducir esos crípticos códigos de planeta a ubicaciones reales en la HoloRed reside en el **Sistema de Nombres de Dominio (DNS)**. Imaginen el DNS como una guía galáctica, un vasto directorio que asocia los nombres fáciles de recordar de los sistemas estelares y bases rebeldes con sus coordenadas numéricas exactas en la red, sus **direcciones IP**.
+
+**Funcionamiento Básico del DNS:**
+
+En esencia, el DNS funciona como un sistema distribuido de bases de datos jerárquicas. Cuando un miembro de la Alianza intenta acceder a un recurso en la HoloRed utilizando un nombre de dominio (por ejemplo, `echo.base`), su dispositivo realiza una consulta a un **servidor DNS**.
+
+El proceso de **resolución de nombres de dominio** a direcciones IP generalmente sigue estos pasos:
+
+1.  **Consulta del Cliente:** El dispositivo del usuario envía una consulta al servidor DNS configurado, preguntando por la dirección IP asociada al nombre de dominio.
+2.  **Consulta Recursiva (si es necesario):** Si el servidor DNS inicial no tiene la respuesta, puede consultar a otros servidores DNS en la jerarquía para encontrar la información.
+3.  **Respuesta del Servidor DNS:** Una vez que se encuentra la dirección IP, el servidor DNS envía una respuesta al cliente.
+4.  **Establecimiento de la Conexión:** Con la dirección IP, el dispositivo puede establecer una conexión con el recurso deseado.
+
+**Importancia del DNS en la Comunicación en Redes:**
+
+El DNS es fundamental por las siguientes razones:
+
+* **Facilita el Acceso:** Permite usar nombres de dominio fáciles de recordar en lugar de direcciones IP numéricas.
+* **Abstracción de la Dirección IP:** Los nombres de dominio permanecen consistentes aunque las direcciones IP cambien.
+* **Organización Jerárquica:** Permite una administración descentralizada y eficiente de los nombres de dominio.
+
+**Servidor DNS y Registros (Registro A):**
+
+* **Servidor DNS:** Un servidor especializado que almacena y gestiona la información de los nombres de dominio y sus IPs, respondiendo a las consultas.
+* **Registro A:** Asocia un nombre de dominio (o subdominio) con una dirección IPv4.
+
+    **Ejemplo:** Para `holonet.rebelion.org`, un registro A podría ser:
+
+    ```
+    holonet.rebelion.org.  IN  A   203.0.113.45
+    ```
+
+    Esto asocia el nombre `holonet.rebelion.org` con la IP `203.0.113.45`.
+
+**Consecuencias de la Indisponibilidad del Servidor DNS:**
+
+Si el servidor DNS no está disponible:
+
+* **Fallo en la Resolución de Nombres:** Los nombres de dominio no se podrán traducir a direcciones IP.
+* **Incomunicación:** Dificultad para acceder a recursos y comunicarse en la red.
+* **Aislamiento:** Las bases y naves podrían quedar aisladas en la red.
+
+En resumen, el DNS es vital para la comunicación en la HoloRed, permitiendo el uso de nombres significativos para acceder a los recursos. Sin él, la coordinación de la Alianza se vería gravemente afectada.
