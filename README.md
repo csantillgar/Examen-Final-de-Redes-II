@@ -274,3 +274,83 @@ En contraste, **Telnet** transmite todos los datos, incluyendo las contraseñas,
 
 Con estos métodos de cifrado y protocolos seguros, Mon Mothma, podemos fortalecer nuestras comunicaciones y dificultar enormemente que el lado oscuro obtenga información sobre nuestros movimientos.
 ## Parte II – Misiones Prácticas con Cisco Packet Tracer (40%)
+## Misión 6: Red Troncal de la Alianza – Conectando Hoth, Home One y Endor
+
+**Topología de la Red:**
+
+La siguiente imagen representa la topología de red implementada en Cisco Packet Tracer:
+
+![Topología de la Red Troncal](imagen_2025-05-13_190403952.png)
+
+**Tabla Resumen de Subnetting:**
+
+| Segmento de Red      | Dirección de Red | Máscara de Subred (Decimal) | Máscara de Subred (CIDR) | Rango de Hosts Utilizables | Dirección de Broadcast | Gateway (Interfaz del Router) |
+| :------------------- | :--------------- | :-------------------------- | :----------------------- | :------------------------- | :--------------------- | :---------------------------- |
+| Hoth-LAN             | 10.0.0.0         | 255.255.255.192             | /26                     | 10.0.0.1 - 10.0.0.62       | 10.0.0.63             | Hoth: GigabitEthernet0/0 (10.0.0.1) |
+| HomeOne-LAN          | 10.0.0.64        | 255.255.255.224             | /27                     | 10.0.0.65 - 10.0.0.94      | 10.0.0.95             | HomeOne: GigabitEthernet0/0 (10.0.0.65) |
+| Endor-LAN            | 10.0.0.96        | 255.255.255.224             | /27                     | 10.0.0.97 - 10.0.0.126     | 10.0.0.127            | Endor: GigabitEthernet0/0 (10.0.0.97) |
+| Enlace Hoth-HomeOne  | 10.0.0.128       | 255.255.255.252             | /30                     | 10.0.0.129 - 10.0.0.130    | 10.0.0.131            | Hoth: Serial0/0/0 (10.0.0.129), HomeOne: Serial0/0/0 (10.0.0.130) |
+| Enlace HomeOne-Endor | 10.0.0.132       | 255.255.255.252             | /30                     | 10.0.0.133 - 10.0.0.134    | 10.0.0.135            | HomeOne: Serial0/0/1 (10.0.0.133), Endor: Serial0/0/0 (10.0.0.134) |
+
+**Configuración de Routers (Resumen):**
+
+* **Router Hoth:**
+    ```cisco
+    hostname Hoth
+    interface GigabitEthernet0/0
+     ip address 10.0.0.1 255.255.255.192
+     no shutdown
+    interface Serial0/0/0
+     ip address 10.0.0.129 255.255.255.252
+     no shutdown
+    router ospf 1
+     router-id 1.1.1.1
+     network 10.0.0.0 0.0.0.63 area 0
+     network 10.0.0.128 0.0.0.3 area 0
+    end
+    write memory
+    ```
+* **Router HomeOne:**
+    ```cisco
+    hostname HomeOne
+    interface GigabitEthernet0/0
+     ip address 10.0.0.65 255.255.255.224
+     no shutdown
+    interface Serial0/0/0
+     ip address 10.0.0.130 255.255.255.252
+     no shutdown
+    interface Serial0/0/1
+     ip address 10.0.0.133 255.255.255.252
+     no shutdown
+    router ospf 1
+     router-id 2.2.2.2
+     network 10.0.0.64 0.0.0.31 area 0
+     network 10.0.0.128 0.0.0.3 area 0
+     network 10.0.0.132 0.0.0.3 area 0
+    end
+    write memory
+    ```
+* **Router Endor:**
+    ```cisco
+    hostname Endor
+    interface GigabitEthernet0/0
+     ip address 10.0.0.97 255.255.255.224
+     no shutdown
+    interface Serial0/0/0
+     ip address 10.0.0.134 255.255.255.252
+     no shutdown
+    router ospf 1
+     router-id 3.3.3.3
+     network 10.0.0.96 0.0.0.31 area 0
+     network 10.0.0.132 0.0.0.3 area 0
+    end
+    write memory
+    ```
+
+**Verificación:**
+
+Se verificó la conectividad mediante pings exitosos entre los PCs de las diferentes LANs, lo que confirma el correcto funcionamiento del enrutamiento OSPF. El comando `show ip ospf neighbor` en cada router confirmó el establecimiento de vecindades OSPF con los routers adyacentes, y el comando `show ip route` mostró las rutas aprendidas a través de OSPF en las tablas de enrutamiento de cada dispositivo.
+
+**Archivo Packet Tracer:**
+
+El archivo de Packet Tracer con la topología configurada se entrega como `Mision6_RedTroncal.pkt`.
