@@ -220,3 +220,56 @@ Luke, la diferencia que percibes en las transmisiones se debe a los dos principa
 * **Consultas DNS:** Las consultas al servidor de nombres de dominio suelen utilizar UDP debido a su rapidez. Una respuesta rápida es importante para la navegación en la red.
 
 En resumen, Luke, TCP es como un carguero estelar que asegura que cada caja de suministros llegue a su destino, incluso si tiene que tomar una ruta más larga. UDP, en cambio, es como un caza rápido que entrega mensajes rápidamente, sin preocuparse demasiado si alguno se pierde en el camino. La elección entre TCP y UDP depende de las prioridades de la comunicación: integridad y orden versus velocidad y baja latencia.
+## Misión 5: Comunicación Segura o lado oscuro – Criptografía y Seguridad de la Red
+
+**Situación:** La victoria rebelde depende de que sus comunicaciones permanezcan secretas. Se rumorea que espías imperiales (e incluso usuarios del lado oscuro) intentan interceptar los mensajes de la Alianza. La líder Mon Mothma te encomienda diseñar un protocolo de comunicación cifrado para que los mensajes entre bases rebeldes no puedan ser leídos por el Imperio aunque sean capturados.
+
+**Narrativa:** En la sala de guerra de la base rebelde, Mon Mothma se dirige a ti con semblante serio: "Hemos logrado infiltrar agentes en Coruscant, pero comunicarse con ellos es arriesgado. El Imperio intercepta cualquier señal. Aprendiz, necesitamos que nuestras transmisiones sean indescifrables para el enemigo." A tu lado, C-3PO comenta nerviosamente en más de seis millones de formas de comunicación: "Si caemos en manos imperiales, prefiero que apaguen mis circuitos a revelar nuestros mensajes."
+
+Recuerdas que cifrar es esencial: usar claves secretas para que sólo los rebeldes autorizados puedan leer un mensaje. También piensas en las dos formas en que esto se puede lograr: con clave simétrica (una misma clave secreta compartida) o con claves públicas/privadas (criptografía asimétrica). Es hora de demostrar tu conocimiento en seguridad.
+
+**Pregunta:** Explica brevemente la diferencia entre cifrado simétrico y cifrado asimétrico en el contexto de las comunicaciones de la Alianza. ¿Cómo funciona cada esquema y qué ventajas ofrece? Por ejemplo, si Leia y Luke comparten una frase clave secreta para cifrar sus holomensajes, ¿qué tipo de cifrado es ese? En cambio, si la Alianza quiere enviar un mensaje a un nuevo aliado sin haber intercambiado una clave secreta previamente, ¿cómo podría ayudar el cifrado asimétrico (claves pública/privada) en ese caso? Comenta también sobre la importancia de autenticación y no repudio en los mensajes (cómo podemos estar seguros de que el mensaje no ha sido alterado y proviene realmente de quien dice ser). Finalmente, menciona por qué utilizar un protocolo seguro (como SSH en lugar de Telnet) es crucial al administrar remotamente los equipos de la red rebelde.
+
+**Respuesta:**
+
+Mon Mothma, la seguridad de nuestras comunicaciones es primordial para evitar que el Imperio descubra nuestros planes. Existen dos métodos principales de cifrado que podemos emplear: el **cifrado simétrico** y el **cifrado asimétrico**.
+
+**Cifrado Simétrico:**
+
+* **Funcionamiento:** En el cifrado simétrico, **una única clave secreta** se utiliza tanto para cifrar (codificar) el mensaje original (texto plano) como para descifrar (decodificar) el mensaje cifrado (texto cifrado). Tanto el emisor como el receptor deben conocer y compartir esta clave secreta.
+* **Ventajas:**
+    * **Rapidez:** Los algoritmos de cifrado simétrico suelen ser computacionalmente eficientes, lo que permite cifrar y descifrar grandes cantidades de datos rápidamente.
+    * **Simplicidad:** El concepto es relativamente sencillo de entender e implementar.
+* **Ejemplo en la Alianza:** Si la General Leia y Luke Skywalker comparten una **frase clave secreta** para cifrar sus holomensajes, este sería un ejemplo de **cifrado simétrico**. Ambos utilizan la misma frase (la clave secreta) para codificar sus mensajes antes de enviarlos y para decodificarlos al recibirlos.
+
+**Cifrado Asimétrico (de Clave Pública/Privada):**
+
+* **Funcionamiento:** El cifrado asimétrico utiliza un **par de claves relacionadas matemáticamente**: una **clave pública** y una **clave privada**.
+    * La **clave pública** puede compartirse libremente con cualquier persona. Los mensajes cifrados con la clave pública solo pueden ser descifrados utilizando la **clave privada** correspondiente, que debe mantenerse en secreto por su propietario.
+    * La **clave privada** es única para cada entidad y nunca debe ser compartida.
+* **Ventajas:**
+    * **Comunicación Segura sin Intercambio Previo de Claves:** Permite la comunicación segura con entidades con las que no se ha intercambiado una clave secreta previamente. Alguien que quiera enviar un mensaje seguro a un nuevo aliado puede cifrarlo utilizando la clave pública del destinatario. Solo el destinatario, con su clave privada, podrá descifrar el mensaje.
+    * **Autenticación y No Repudio (con firmas digitales):** La clave privada también se puede utilizar para crear firmas digitales, que permiten al receptor verificar la autenticidad del remitente y asegurar que el remitente no puede negar haber enviado el mensaje (no repudio).
+* **Ejemplo en la Alianza:** Si la Alianza quiere enviar un mensaje a un nuevo aliado sin haber intercambiado una clave secreta previamente, podría funcionar así:
+    1. El nuevo aliado genera un par de claves: una clave pública y una clave privada.
+    2. El nuevo aliado comparte su **clave pública** con la Alianza (a través de un canal potencialmente inseguro, ya que la clave pública no es secreta).
+    3. La Alianza cifra el mensaje utilizando la **clave pública** del nuevo aliado.
+    4. El mensaje cifrado se envía al nuevo aliado.
+    5. Solo el nuevo aliado, que posee la **clave privada** correspondiente, puede descifrar el mensaje.
+
+**Importancia de la Autenticación y el No Repudio:**
+
+* **Autenticación:** Es crucial asegurarse de que un mensaje realmente proviene de la fuente que dice ser. Sin autenticación, un espía imperial podría enviar mensajes haciéndose pasar por un líder rebelde, sembrando confusión o dando órdenes falsas. La autenticación se puede lograr mediante el uso de firmas digitales (con criptografía asimétrica) o mediante el uso de claves compartidas (en sistemas simétricos, asumiendo que la clave solo la conocen las partes legítimas).
+* **No Repudio:** El no repudio proporciona la prueba de que un mensaje fue enviado y recibido por las partes involucradas. Esto evita que un remitente niegue haber enviado un mensaje. Las firmas digitales basadas en criptografía asimétrica son una forma de proporcionar no repudio, ya que la clave privada utilizada para firmar el mensaje es única para el remitente.
+
+**Importancia de Protocolos Seguros (SSH vs. Telnet):**
+
+Al administrar remotamente los equipos de la red rebelde, utilizar un protocolo seguro como **SSH (Secure Shell)** en lugar de Telnet es crucial por las siguientes razones:
+
+* **Cifrado:** SSH cifra todo el tráfico entre el cliente (el administrador) y el servidor remoto (el equipo de red). Esto incluye las credenciales de inicio de sesión (nombre de usuario y contraseña) y todos los comandos y la salida de los comandos. Incluso si un espía imperial intercepta la comunicación, no podrá entender los datos transmitidos.
+* **Autenticación Segura:** SSH admite métodos de autenticación más seguros que Telnet, como la autenticación basada en claves públicas, que es más resistente a ataques de fuerza bruta que las contraseñas simples.
+* **Integridad:** SSH puede verificar la integridad de los datos transmitidos, asegurando que no hayan sido alterados en tránsito.
+
+En contraste, **Telnet** transmite todos los datos, incluyendo las contraseñas, en **texto plano**. Si un espía imperial intercepta el tráfico de Telnet, podría obtener fácilmente las credenciales de acceso a nuestros equipos de red, comprometiendo toda la infraestructura rebelde. Utilizar SSH es, por lo tanto, una medida fundamental para proteger la administración de nuestra red de las miradas indiscretas del Imperio.
+
+Con estos métodos de cifrado y protocolos seguros, Mon Mothma, podemos fortalecer nuestras comunicaciones y dificultar enormemente que el lado oscuro obtenga información sobre nuestros movimientos.
