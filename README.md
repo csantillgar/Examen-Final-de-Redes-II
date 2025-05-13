@@ -182,3 +182,41 @@ Si el servidor DNS no está disponible:
 * **Aislamiento:** Las bases y naves podrían quedar aisladas en la red.
 
 En resumen, el DNS es vital para la comunicación en la HoloRed, permitiendo el uso de nombres significativos para acceder a los recursos. Sin él, la coordinación de la Alianza se vería gravemente afectada.
+## Misión 4: “Es una trampa… de protocolos!” – TCP vs UDP en las transmisiones
+
+**Situación:** Durante la batalla espacial sobre Endor, los ingenieros de comunicación rebelde notan comportamientos distintos en las transmisiones de datos. Algunas comunicaciones deben ser rápidas aunque ocasionalmente se pierda información (por ejemplo, un stream de vídeo de una cámara X-Wing), mientras que otras deben llegar íntegras y en orden aunque tarden un poco más (por ejemplo, la transferencia de los planos de la Estrella de la Muerte). Estas diferencias corresponden al uso de distintos protocolos de transporte: UDP y TCP. Luke Skywalker, ahora piloteando su X-Wing y ejerciendo de líder en el ataque, te pregunta por qué percibe lagos de datos en unas transmisiones y retrasos en otras.
+
+**Narrativa:** En medio del fragor de la batalla, ves cómo R2-D2 proyecta diagramas de paquetes dentro del X-Wing de Luke. "Algunas de estas tramas van rápidas como el Halcón Milenario, pero otras llegan seguras como Yoda al Consejo," comenta Luke por el comunicador, intentando comprender. Tú, desde la sala de control, le explicas que siente la diferencia entre los dos grandes protocolos de la capa de transporte.
+
+**Pregunta:** Compara los protocolos TCP y UDP y sus características en contexto de la transmisión de datos. ¿Por qué TCP se considera un protocolo confiable y orientado a conexión, y qué implica eso en cuanto a rendimiento? ¿Por qué UDP es no confiable y sin conexión, y en qué casos su rapidez resulta ventajosa? En tu respuesta, menciona ejemplos de aplicaciones o situaciones galácticas para cada protocolo: por ejemplo, qué tipo de datos enviarías mediante UDP durante una misión crítica, y cuál vía TCP en comunicaciones rutinarias.
+
+**Respuesta:**
+
+Luke, la diferencia que percibes en las transmisiones se debe a los dos principales protocolos de la capa de transporte: **TCP (Transmission Control Protocol)** y **UDP (User Datagram Protocol)**. Cada uno tiene sus propias características y es adecuado para diferentes tipos de datos y situaciones.
+
+**TCP (Protocolo de Control de Transmisión): Confiable y Orientado a Conexión**
+
+* **Confiable:** TCP garantiza la entrega de datos de forma **completa y ordenada**. Utiliza un sistema de acuse de recibo (acknowledgment) para verificar que cada segmento de datos enviado ha llegado correctamente al destino. Si un segmento se pierde o llega corrupto, el remitente lo retransmite.
+* **Orientado a Conexión:** Antes de que los datos puedan ser transferidos, TCP establece una **conexión** entre el emisor y el receptor a través de un proceso de "handshake" de tres vías. Esta conexión virtual asegura que ambos extremos estén listos para comunicarse. Una vez finalizada la transmisión, la conexión se cierra.
+* **Rendimiento:** La confiabilidad y la orientación a conexión de TCP introducen una **sobrecarga** en términos de tiempo y recursos. El establecimiento de la conexión, el seguimiento de los segmentos, los acuses de recibo y las posibles retransmisiones pueden generar **retrasos** y reducir la velocidad de transmisión en comparación con UDP.
+
+**Ejemplos Galácticos para TCP:**
+
+* **Transferencia de los planos de la Estrella de la Muerte:** La integridad de estos datos es crucial. Cada bit debe llegar en orden y sin errores para que la Alianza pueda encontrar su punto débil. TCP sería el protocolo ideal para asegurar que los planos se transmitan de forma confiable.
+* **Comunicaciones rutinarias y estratégicas:** El envío de informes de misión detallados, órdenes de la General Organa o cualquier información donde la pérdida o el desorden de los datos podría tener consecuencias negativas se beneficiaría de la confiabilidad de TCP.
+* **Acceso a bases de datos de inteligencia:** Cuando los analistas rebeldes acceden a información almacenada en servidores remotos, TCP asegura que los datos se recuperen de manera precisa y completa.
+
+**UDP (Protocolo de Datagramas de Usuario): No Confiable y Sin Conexión**
+
+* **No Confiable:** UDP no garantiza la entrega de los datos. Los paquetes (llamados datagramas en UDP) se envían sin acuse de recibo ni retransmisión en caso de pérdida. No hay mecanismos incorporados para asegurar que los datos lleguen al destino, ni mucho menos en el orden correcto.
+* **Sin Conexión:** UDP no establece una conexión antes de enviar los datos. Simplemente envía los datagramas al destino sin verificar si el receptor está listo o incluso existe.
+* **Rendimiento:** La falta de mecanismos de confiabilidad y de establecimiento de conexión hace que UDP sea **mucho más rápido** que TCP. La sobrecarga es mínima, lo que permite una transmisión de datos más ágil con menor latencia.
+
+**Ejemplos Galácticos para UDP:**
+
+* **Stream de vídeo de una cámara X-Wing:** Durante un combate, la velocidad es primordial. Aunque ocasionalmente se pierda algún fotograma (causando un "lago" de datos), es más importante tener una transmisión en tiempo real de la situación que esperar a que cada fotograma llegue perfectamente pero con un retraso significativo.
+* **Comunicaciones de voz en tiempo real durante una misión crítica:** Al igual que el vídeo, la rapidez de la comunicación por voz es esencial, incluso si se pierden algunas palabras o frases cortas. Un pequeño "lag" es preferible a una conversación entrecortada por retransmisiones.
+* **Transmisión de telemetría de naves en combate:** Datos como la velocidad, la posición y el estado de los escudos de un caza X-Wing necesitan ser transmitidos rápidamente a la nave nodriza. La pérdida ocasional de un paquete de telemetría es menos crítica que la latencia en la recepción de la información.
+* **Consultas DNS:** Las consultas al servidor de nombres de dominio suelen utilizar UDP debido a su rapidez. Una respuesta rápida es importante para la navegación en la red.
+
+En resumen, Luke, TCP es como un carguero estelar que asegura que cada caja de suministros llegue a su destino, incluso si tiene que tomar una ruta más larga. UDP, en cambio, es como un caza rápido que entrega mensajes rápidamente, sin preocuparse demasiado si alguno se pierde en el camino. La elección entre TCP y UDP depende de las prioridades de la comunicación: integridad y orden versus velocidad y baja latencia.
